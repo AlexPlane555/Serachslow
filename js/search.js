@@ -5,23 +5,24 @@ const reverseButton = document.getElementById("reverse-button");
 let words = [];
 let translations = [];
 
+// Замените 'words.txt' на путь к вашему файлу
 fetch('./js/words.txt')
   .then(response => response.text())
   .then(data => {
-    const lines = data.split('\n');
+    const lines = data.split('\n'); // Разделяем на строки
     lines.forEach(line => {
-      if (line.trim() != "") {
-        const parts = line.split(' - ');
-        if (parts.length == 2) {
+      if (line.trim() !== "") { // Пропускаем пустые строки
+        const parts = line.split(' - '); // Разделяем строку по " - "
+        if (parts.length === 2) {
           words.push(parts[0].trim());
-          translations.push(parts[1].trim().split(/\s+/).map(s => s.trim())); // Разбиваем перевод по пробелам
+          translations.push(parts[1].trim());
         } else {
           console.error("Ошибка в строке:", line);
         }
       }
     });
-    words.sort();
-    displayWords();
+     // Сортируем слова после загрузки
+    displayWords(); // Отображаем слова после загрузки и сортировки
     searchInput.addEventListener("input", searchWords);
     reverseButton.addEventListener("click", reverseTranslation);
   })
@@ -32,7 +33,7 @@ fetch('./js/words.txt')
 
 function displayWords() {
   resultsList.innerHTML = "";
-  words.forEach((word, index) => addWord(word, translations[index].join(', ')));
+  words.forEach((word, index) => addWord(word, translations[index]));
 }
 
 function searchWords() {
@@ -43,23 +44,13 @@ function searchWords() {
   } else {
     words.forEach((word, index) => {
       if (word.toLowerCase().includes(searchTerm)) {
-        addWord(word, translations[index].join(', '));
+        addWord(word, translations[index]);
       }
     });
   }
 }
 
-function reverseTranslation() {
-  resultsList.innerHTML = "";
-  const searchTerm = searchInput.value.toLowerCase();
-  if (searchTerm === "") return;
 
-  translations.forEach((translation, index) => {
-    if (translation.join(' ').toLowerCase().includes(searchTerm)) {
-      addWord(translation.join(', '), words[index]);
-    }
-  });
-}
 
 function addWord(word, translation) {
   const listItem = document.createElement("li");
