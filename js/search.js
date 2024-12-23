@@ -10,9 +10,9 @@ fetch('./js/words.txt')
   .then(data => {
     const lines = data.split('\n');
     lines.forEach(line => {
-      if (line.trim() !== "") {
+      if (line.trim() != "") {
         const parts = line.split(' - ');
-        if (parts.length === 2) {
+        if (parts.length == 2) {
           words.push(parts[0].trim());
           translations.push(parts[1].trim().split(/\s+/).map(s => s.trim())); // Разбиваем перевод по пробелам
         } else {
@@ -43,7 +43,7 @@ function searchWords() {
   } else {
     words.forEach((word, index) => {
       if (word.toLowerCase().includes(searchTerm)) {
-        addWord(word[index], translations[index].join(', '));
+        addWord(word, translations[index].join(', '));
       }
     });
   }
