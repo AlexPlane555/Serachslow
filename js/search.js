@@ -50,7 +50,7 @@ function searchWords() {
   }
 }
 
-function reverseTranslation() {
+/*function reverseTranslation() {
   resultsList.innerHTML = "";
   const searchTerm = searchInput.value.toLowerCase();
   if (searchTerm === "") return;
@@ -60,7 +60,7 @@ function reverseTranslation() {
       addWord(translation, words[index]);
     }
   });
-}
+}*/
 
 function addWord(word, translation) {
   const listItem = document.createElement("li");
