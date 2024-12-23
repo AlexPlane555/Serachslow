@@ -43,7 +43,7 @@ function searchWords() {
   } else {
     words.forEach((word, index) => {
       if (word.toLowerCase().includes(searchTerm)) {
-        addWord(word, translations[index].join(', '));
+        addWord(word[index], translations[index].join(', '));
       }
     });
   }
