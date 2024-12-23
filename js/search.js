@@ -12,35 +12,33 @@ fetch('./js/words.txt')
     const lines = data.split('\n'); // Разделяем на строки
     lines.forEach(line => {
       if (line.trim() !== "") { // Пропускаем пустые строки
-        const parts = line.split(' - '); // Разделяем строку по " - "
+        const parts = line.split(' - '); // Разделяем строку по табуляции
         if (parts.length === 2) {
           words.push(parts[0].trim());
           translations.push(parts[1].trim());
         } else {
-          console.error("Ошибка в строке:", line);
+          console.error("Ошибка в строке:", line); // Выводим ошибку в консоль
         }
       }
     });
-    words.sort(); // Сортируем слова после загрузки
-    displayWords(); // Отображаем слова после загрузки и сортировки
+    //Сортируем слова в алфавитном порядке
+    words.sort();
+    //Теперь можно использовать слова и переводы
     searchInput.addEventListener("input", searchWords);
     reverseButton.addEventListener("click", reverseTranslation);
+
   })
   .catch(error => {
-    console.error("Ошибка при загрузке файла:", error);
-    resultsList.innerHTML = "<p>Ошибка загрузки файла!</p>";
+    console.error("Ошибка при загрузке файла:", error); // Выводим ошибку в консоль
   });
 
-function displayWords() {
-  resultsList.innerHTML = "";
-  words.forEach((word, index) => addWord(word, translations[index]));
-}
 
 function searchWords() {
   const searchTerm = searchInput.value.toLowerCase();
   resultsList.innerHTML = "";
+
   if (searchTerm === "") {
-    displayWords();
+    words.forEach((word, index) => addWord(word, translations[index]));
   } else {
     words.forEach((word, index) => {
       if (word.toLowerCase().includes(searchTerm)) {
@@ -57,7 +55,7 @@ function searchWords() {
 
   translations.forEach((translation, index) => {
     if (translation.toLowerCase().includes(searchTerm)) {
-      addWord(translation, words[index]);
+      addWord(translations[index], words[index]);
     }
   });
 }*/
@@ -67,3 +65,9 @@ function addWord(word, translation) {
   listItem.textContent = word + " - " + translation;
   resultsList.appendChild(listItem);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+      words.forEach((word, index) => {
+      addWord(word, translations[index]);
+    });
+});
